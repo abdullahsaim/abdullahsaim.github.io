@@ -5,7 +5,7 @@
 }
 
 .weather-card {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #ff24ff, #6d30fc);
     color: white;
     animation: fadeIn 0.5s ease-in;
 }
