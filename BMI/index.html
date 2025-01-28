@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-400 via-pink-300 to-red-200 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto max-w-md">
+        <div class="bg-white rounded-lg shadow-2xl p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">BMI Calculator</h1>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2 font-medium">Weight (kg)</label>
+                    <input type="number" id="weight" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                           placeholder="Enter weight in kilograms">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2 font-medium">Height (cm)</label>
+                    <input type="number" id="height" 
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                           placeholder="Enter height in centimeters">
+                </div>
+                
+                <button onclick="calculateBMI()" 
+                        class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    Calculate BMI
+                </button>
+                
+                <div id="result" class="hidden mt-6 p-4 rounded-lg text-center">
+                    <p class="text-xl font-semibold mb-2">Your BMI is: <span id="bmi-value">0</span></p>
+                    <p class="font-medium" id="bmi-category">Category</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to m
+            const resultDiv = document.getElementById('result');
+            const bmiValue = document.getElementById('bmi-value');
+            const bmiCategory = document.getElementById('bmi-category');
+
+            if (isNaN(weight) || isNaN(height) || height === 0) {
+                alert('Please enter valid weight and height');
+                return;
+            }
+
+            const bmi = weight / (height * height);
+            const roundedBMI = bmi.toFixed(1);
+
+            bmiValue.textContent = roundedBMI;
+            resultDiv.classList.remove('hidden');
+
+            // Set category and color
+            if (bmi < 18.5) {
+                bmiCategory.textContent = 'Underweight';
+                resultDiv.className = 'bg-blue-100 text-blue-800 mt-6 p-4 rounded-lg text-center';
+            } else if (bmi < 25) {
+                bmiCategory.textContent = 'Normal weight';
+                resultDiv.className = 'bg-green-100 text-green-800 mt-6 p-4 rounded-lg text-center';
+            } else if (bmi < 30) {
+                bmiCategory.textContent = 'Overweight';
+                resultDiv.className = 'bg-yellow-100 text-yellow-800 mt-6 p-4 rounded-lg text-center';
+            } else {
+                bmiCategory.textContent = 'Obese';
+                resultDiv.className = 'bg-red-100 text-red-800 mt-6 p-4 rounded-lg text-center';
+            }
+        }
+    </script>
+</body>
+</html>
