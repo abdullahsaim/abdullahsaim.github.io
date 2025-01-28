@@ -2,7 +2,6 @@
 
 A modern weather application built with HTML, Tailwind CSS, and JavaScript. Features real-time weather data using the OpenWeatherMap API.
 
-![Weather App Preview](https://via.placeholder.com/600x400?text=Weather+App+Preview) <!-- Replace with actual screenshot -->
 
 ## Features
 - Real-time weather data by city
