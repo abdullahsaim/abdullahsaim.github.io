@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-purple-600 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-8 max-w-2xl w-full shadow-lg">
+        <h1 class="text-4xl font-bold text-white mb-6 text-center">Weather App</h1>
+        <div class="flex mb-6">
+            <input type="text" id="cityInput" placeholder="Enter city name" class="flex-grow px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button id="searchBtn" class="bg-blue-500 text-white px-6 py-2 rounded-r-lg hover:bg-blue-600 transition duration-300">Search</button>
+        </div>
+        <div id="weatherInfo" class="text-white"></div>
+        <div id="forecast" class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
