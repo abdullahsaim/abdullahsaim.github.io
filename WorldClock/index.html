@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clock & Time Difference Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
+    <style>
+        #citySelect option, #currentCity option, #otherCity option {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+        .search-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            outline: none;
+        }
+        .search-input:focus {
+            ring: 2px solid rgba(199, 210, 254, 0.5);
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-purple-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white/10 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-center">World Clock & Time Calculator</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Time Display Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-lg">
+                <h2 class="text-2xl font-semibold text-white mb-6">Select City Time</h2>
+                <div class="mb-6">
+                    <div class="search-container">
+                        <input type="text" id="searchCity" class="search-input" placeholder="Search city..." 
+                               oninput="filterCities('citySelect', this.value)">
+                    </div>
+                    <select id="citySelect" class="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <option value="" disabled selected>Select a City</option>
+                    </select>
+                </div>
+                <div id="timeDisplay" class="text-center py-8 bg-white/10 rounded-lg">
+                    <div class="text-6xl font-bold text-white mb-4" id="currentTime">--:--:--</div>
+                    <div class="text-2xl text-white/80" id="currentDate">---</div>
+                </div>
+            </div>
+
+            <!-- Time Difference Calculator -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-lg">
+                <h2 class="text-2xl font-semibold text-white mb-6">Time Difference Calculator</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-white/80 mb-2">Your Current City</label>
+                        <div class="search-container">
+                            <input type="text" id="searchCurrentCity" class="search-input" placeholder="Search city..." 
+                                   oninput="filterCities('currentCity', this.value)">
+                        </div>
+                        <select id="currentCity" class="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                            <option value="" disabled selected>Select Current City</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-white/80 mb-2">Other City</label>
+                        <div class="search-container">
+                            <input type="text" id="searchOtherCity" class="search-input" placeholder="Search city..." 
+                                   oninput="filterCities('otherCity', this.value)">
+                        </div>
+                        <select id="otherCity" class="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400">
+                            <option value="" disabled selected>Select Other City</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateTimeDifference()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-lg transition-all duration-300">
+                        Calculate Difference
+                    </button>
+                    <div id="result" class="text-center text-white/90 text-xl mt-6"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/10 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-white/80">&copy; 2023 World Clock. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize cities and search functionality
+        const timeZones = moment.tz.names();
+        const selects = document.querySelectorAll('select');
+        
+        // Store original options for each select
+        const originalOptions = new Map();
+        
+        timeZones.forEach(zone => {
+            selects.forEach(select => {
+                const option = document.createElement('option');
+                option.value = zone;
+                option.textContent = zone.replace(/_/g, ' ');
+                select.appendChild(option.cloneNode(true));
+                
+                // Store original options
+                if (!originalOptions.has(select.id)) {
+                    originalOptions.set(select.id, []);
+                }
+                originalOptions.get(select.id).push(option);
+            });
+        });
+
+        // Search filter function
+        function filterCities(selectId, searchText) {
+            const select = document.getElementById(selectId);
+            const search = searchText.toLowerCase();
+            
+            // Clear current options
+            select.innerHTML = '';
+            
+            // Add filtered options
+            originalOptions.get(selectId).forEach(option => {
+                if (option.textContent.toLowerCase().includes(search)) {
+                    select.appendChild(option.cloneNode(true));
+                }
+            });
+        }
+
+        // [Keep the rest of the JavaScript code unchanged]
+        // Time display functionality
+        let intervalId;
+        document.getElementById('citySelect').addEventListener('change', function() {
+            clearInterval(intervalId);
+            updateTime();
+            intervalId = setInterval(updateTime, 1000);
+        });
+
+        function updateTime() {
+            const selectedZone = document.getElementById('citySelect').value;
+            if (!selectedZone) return;
+
+            const time = moment().tz(selectedZone);
+            document.getElementById('currentTime').textContent = time.format('HH:mm:ss');
+            document.getElementById('currentDate').textContent = time.format('dddd, MMMM Do YYYY');
+        }
+
+        // Time difference calculator
+        function calculateTimeDifference() {
+            const currentCity = document.getElementById('currentCity').value;
+            const otherCity = document.getElementById('otherCity').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!currentCity || !otherCity) {
+                resultDiv.textContent = "Please select both cities!";
+                return;
+            }
+
+            const currentTime = moment().tz(currentCity);
+            const otherTime = moment().tz(otherCity);
+            const diffHours = otherTime.utcOffset()/60 - currentTime.utcOffset()/60;
+
+            resultDiv.innerHTML = `
+                <div class="text-2xl font-semibold mb-2">
+                    Time Difference: ${Math.abs(diffHours)} hours
+                </div>
+                <div class="text-lg">
+                    ${currentCity.split('/')[1]} is 
+                    ${diffHours >= 0 ? 'ahead' : 'behind'} 
+                    ${otherCity.split('/')[1]} by 
+                    ${Math.abs(diffHours)} hours
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
