@@ -45,14 +45,14 @@
         <!-- Time Display Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-lg">
-                <h2 class="text-2xl font-semibold text-white mb-6">Select City Time</h2>
+                <h2 class="text-2xl font-semibold text-white mb-6">Select Your Timezone</h2>
                 <div class="mb-6">
                     <div class="search-container">
                         <input type="text" id="searchCity" class="search-input" placeholder="Search city..." 
                                oninput="filterCities('citySelect', this.value)">
                     </div>
                     <select id="citySelect" class="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400">
-                        <option value="" disabled selected>Select a City</option>
+                        <option value="" disabled selected>Select a Timezone</option>
                     </select>
                 </div>
                 <div id="timeDisplay" class="text-center py-8 bg-white/10 rounded-lg">
@@ -66,7 +66,7 @@
                 <h2 class="text-2xl font-semibold text-white mb-6">Time Difference Calculator</h2>
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-white/80 mb-2">Your Current City</label>
+                        <label class="block text-white/80 mb-2">Your Current Timezone</label>
                         <div class="search-container">
                             <input type="text" id="searchCurrentCity" class="search-input" placeholder="Search city..." 
                                    oninput="filterCities('currentCity', this.value)">
@@ -76,13 +76,13 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-white/80 mb-2">Other City</label>
+                        <label class="block text-white/80 mb-2">Other Timezone</label>
                         <div class="search-container">
                             <input type="text" id="searchOtherCity" class="search-input" placeholder="Search city..." 
                                    oninput="filterCities('otherCity', this.value)">
                         </div>
                         <select id="otherCity" class="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400">
-                            <option value="" disabled selected>Select Other City</option>
+                            <option value="" disabled selected>Select Other Timezone</option>
                         </select>
                     </div>
                     <button onclick="calculateTimeDifference()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 px-6 rounded-lg transition-all duration-300">
