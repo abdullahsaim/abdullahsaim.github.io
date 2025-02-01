@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Piano/Synth 🎹</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-500 to-pink-500 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Piano Container -->
+        <div class="max-w-4xl mx-auto bg-white/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl">
+            <!-- Controls -->
+            <div class="flex flex-wrap gap-4 mb-6">
+                <select id="instrument" class="px-4 py-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                    <option value="sine">Sine Wave</option>
+                    <option value="square">Square Wave</option>
+                    <option value="sawtooth">Sawtooth Wave</option>
+                    <option value="triangle">Triangle Wave</option>
+                </select>
+                
+                <button id="recordBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition">
+                    ⏺ Start Recording
+                </button>
+                
+                <button id="playBtn" disabled class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition">
+                    ▶ Playback
+                </button>
+            </div>
+
+            <!-- Piano Keys -->
+            <div id="piano" class="relative h-48"></div>
+        </div>
+    </div>
+
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const keys = ['a', 's', 'd', 'f', 'g', 'h', 'j'];
+        const notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
+        let isRecording = false;
+        let recording = [];
+        let startTime;
+
+        // Create piano keys
+        function createPiano() {
+            const piano = document.getElementById('piano');
+            
+            notes.forEach((note, index) => {
+                const key = document.createElement('div');
+                key.className = `absolute h-full w-14 bg-white border border-gray-200 rounded-b-lg cursor-pointer 
+                               shadow-md hover:bg-gray-50 active:bg-blue-100 transition-colors`;
+                key.style.left = `${index * 64}px`;
+                key.dataset.note = note;
+                key.dataset.key = keys[index];
+
+                // Add keyboard label
+                const label = document.createElement('div');
+                label.className = 'absolute bottom-2 w-full text-center text-gray-600 font-bold';
+                label.textContent = keys[index].toUpperCase();
+                key.appendChild(label);
+
+                // Add black keys between specific white keys
+                if (['C4', 'D4', 'F4', 'G4', 'A4'].includes(note)) {
+                    const blackKey = document.createElement('div');
+                    blackKey.className = `absolute h-2/3 w-10 bg-black rounded-b-lg cursor-pointer 
+                                       shadow-md hover:bg-gray-800 active:bg-gray-700 transition-colors z-10`;
+                    blackKey.style.left = `${(index * 64) + 44}px`;
+                    blackKey.dataset.note = `${note}#`;
+                    blackKey.dataset.key = keys[index] + 'b';
+                    
+                    const blackLabel = document.createElement('div');
+                    blackLabel.className = 'absolute bottom-2 w-full text-center text-white font-bold';
+                    blackLabel.textContent = keys[index].toUpperCase() + 'B';
+                    blackKey.appendChild(blackLabel);
+
+                    piano.appendChild(blackKey);
+                }
+
+                piano.appendChild(key);
+            });
+        }
+
+        // Play note function
+        function playNote(frequency) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.type = document.getElementById('instrument').value;
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.connect(gainNode).connect(audioContext.destination);
+            oscillator.start();
+            
+            return { oscillator, gainNode, time: audioContext.currentTime };
+        }
+
+        // Map note frequencies (C4 to B4)
+        const noteFrequencies = {
+            'C4': 261.63, 'C#4': 277.18,
+            'D4': 293.66, 'D#4': 311.13,
+            'E4': 329.63,
+            'F4': 349.23, 'F#4': 369.99,
+            'G4': 392.00, 'G#4': 415.30,
+            'A4': 440.00, 'A#4': 466.16,
+            'B4': 493.88
+        };
+
+        // Event Listeners
+        document.getElementById('piano').addEventListener('mousedown', e => {
+            if (e.target.dataset.note) {
+                const frequency = noteFrequencies[e.target.dataset.note];
+                if (frequency) {
+                    playNote(frequency);
+                    if (isRecording) {
+                        recording.push({
+                            note: e.target.dataset.note,
+                            time: Date.now() - startTime
+                        });
+                    }
+                }
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', e => {
+            if (!e.repeat) {
+                const key = e.key.toLowerCase();
+                const noteElement = document.querySelector(`[data-key="${key}"]`);
+                if (noteElement) {
+                    noteElement.click();
+                    noteElement.classList.add('bg-blue-100');
+                }
+            }
+        });
+
+        document.addEventListener('keyup', e => {
+            const key = e.key.toLowerCase();
+            const noteElement = document.querySelector(`[data-key="${key}"]`);
+            if (noteElement) {
+                noteElement.classList.remove('bg-blue-100');
+            }
+        });
+
+        // Recording functionality
+        document.getElementById('recordBtn').addEventListener('click', function() {
+            isRecording = !isRecording;
+            if (isRecording) {
+                recording = [];
+                startTime = Date.now();
+                this.textContent = '⏹ Stop Recording';
+                this.classList.remove('bg-red-500');
+                this.classList.add('bg-red-700');
+                document.getElementById('playBtn').disabled = true;
+            } else {
+                this.textContent = '⏺ Start Recording';
+                this.classList.add('bg-red-500');
+                this.classList.remove('bg-red-700');
+                document.getElementById('playBtn').disabled = false;
+            }
+        });
+
+        document.getElementById('playBtn').addEventListener('click', () => {
+            recording.forEach(note => {
+                setTimeout(() => {
+                    playNote(noteFrequencies[note.note]);
+                }, note.time);
+            });
+        });
+
+        // Initialize piano
+        createPiano();
+    </script>
+</body>
+</html>
