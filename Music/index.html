@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Music Player 🎵</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 max-w-md">
+        <div class="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-6">
+            <!-- File Upload -->
+            <div class="mb-6">
+                <input type="file" id="fileInput" accept="audio/*" multiple 
+                       class="hidden" />
+                <label for="fileInput" 
+                       class="block w-full py-3 px-4 bg-white/20 rounded-xl text-white 
+                             text-center cursor-pointer hover:bg-white/30 transition">
+                    📁 Upload Music Files
+                </label>
+            </div>
+
+            <!-- Playlist -->
+            <div id="playlist" class="h-64 overflow-y-auto mb-6 rounded-xl bg-black/10">
+                <!-- Playlist items will be added here -->
+            </div>
+
+            <!-- Player Controls -->
+            <div class="space-y-4">
+                <!-- Song Info -->
+                <div class="text-center text-white">
+                    <h2 id="songTitle" class="text-xl font-bold truncate">No song selected</h2>
+                    <p id="songArtist" class="text-sm opacity-80">-</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="relative group">
+                    <input type="range" id="progress" value="0" 
+                           class="w-full h-2 bg-white/20 rounded-full appearance-none
+                                  cursor-pointer accent-white/80 hover:accent-white">
+                    <div class="flex justify-between text-white text-xs mt-1">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center justify-center space-x-6">
+                    <button id="prevBtn" class="p-3 text-white hover:bg-white/10 rounded-full">
+                        ⏮
+                    </button>
+                    <button id="playBtn" class="p-4 bg-white text-purple-600 rounded-full 
+                                              shadow-lg hover:scale-105 transition">
+                        ▶
+                    </button>
+                    <button id="nextBtn" class="p-3 text-white hover:bg-white/10 rounded-full">
+                        ⏭
+                    </button>
+                </div>
+
+                <!-- Volume Controls -->
+                <div class="flex items-center space-x-4">
+                    <button id="muteBtn" class="text-white px-2">🔊</button>
+                    <input type="range" id="volume" min="0" max="1" step="0.1" value="1"
+                           class="w-32 h-2 bg-white/20 rounded-full appearance-none
+                                  cursor-pointer accent-white/80">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = new Audio();
+        let playlist = [];
+        let currentTrack = 0;
+        let isMuted = false;
+
+        // File input handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            playlist = files;
+            currentTrack = 0;
+            updatePlaylist();
+            loadTrack(currentTrack);
+        });
+
+        // Update playlist display
+        function updatePlaylist() {
+            const playlistDiv = document.getElementById('playlist');
+            playlistDiv.innerHTML = '';
+            
+            playlist.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = `p-3 text-white cursor-pointer hover:bg-white/10 
+                               ${index === currentTrack ? 'bg-white/20' : ''}`;
+                div.textContent = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+                div.onclick = () => loadTrack(index);
+                playlistDiv.appendChild(div);
+            });
+        }
+
+        // Load track
+        function loadTrack(index) {
+            currentTrack = index;
+            const file = playlist[index];
+            const url = URL.createObjectURL(file);
+            
+            audio.src = url;
+            audio.play();
+            document.getElementById('playBtn').textContent = '⏸';
+            updatePlaylist();
+            
+            // Update metadata
+            document.getElementById('songTitle').textContent = file.name.replace(/\.[^/.]+$/, "");
+            document.getElementById('songArtist').textContent = 'Uploaded Track';
+        }
+
+        // Play/Pause
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('playBtn').textContent = '⏸';
+            } else {
+                audio.pause();
+                document.getElementById('playBtn').textContent = '▶';
+            }
+        });
+
+        // Next/Previous
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrack);
+        });
+
+        // Progress bar
+        audio.addEventListener('timeupdate', () => {
+            const progress = document.getElementById('progress');
+            progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+            
+            document.getElementById('currentTime').textContent = 
+                formatTime(audio.currentTime);
+            document.getElementById('duration').textContent = 
+                formatTime(audio.duration);
+        });
+
+        document.getElementById('progress').addEventListener('input', (e) => {
+            const seekTime = (e.target.value / 100) * audio.duration;
+            audio.currentTime = seekTime;
+        });
+
+        // Volume controls
+        document.getElementById('volume').addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+            document.getElementById('muteBtn').textContent = 
+                e.target.value == 0 ? '🔇' : '🔊';
+        });
+
+        document.getElementById('muteBtn').addEventListener('click', () => {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            document.getElementById('muteBtn').textContent = isMuted ? '🔇' : '🔊';
+            document.getElementById('volume').value = isMuted ? 0 : audio.volume;
+        });
+
+        // Time formatter
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Handle track end
+        audio.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+        });
+    </script>
+</body>
+</html>
