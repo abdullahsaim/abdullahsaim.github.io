@@ -20,3 +20,7 @@ GitHub Pages paths are case-sensitive. Each application directory must contain a
 - `Words/`: live Unicode-aware text statistics, reading estimates, case conversions, line cleanup, literal find-and-replace, undo/redo, focus mode, and plain-text import/export. Text stays in tab memory. Import limit: 2 MB.
 
 Shared styling lives in `assets/toolkit.css`. Neither tool needs a build step, API key, server processing, or user account.
+
+## Atlas geography playground
+
+`Atlas/` bundles 195 country profiles, local SVG flags, and a Natural Earth world map. Explore with search, region filters, pan/zoom, and saved countries; play capital, flag, map, mixed, or deterministic daily quizzes. Optional timers, difficulty levels, hints, answer review, and a browser-local passport are included. See `Atlas/SOURCES.md` and bundled licenses for data attribution. No runtime geography API or build step is required.
