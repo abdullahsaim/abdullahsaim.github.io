@@ -26,5 +26,5 @@ Bundled snapshot prepared on 26 October 2026. Atlas makes no runtime geography A
 
 - Daily questions are seeded from the visitor's local calendar date and the bundled country list. They change at local midnight when the next round starts.
 - Discoveries, saved places, cumulative answers, milestones, and recent completed rounds are kept in localStorage under `atlas-passport-v1`.
-- Export creates a JSON copy of the browser-local passport. It is a record export; the app does not currently import passports.
+- Export creates a JSON copy of the browser-local passport. The Restore action validates that JSON file and asks before replacing the current browser-local passport.
 - The quiz engine is independent of the interface in `engine.js`; flags and geography data stay available without external image services after the page and its local assets have loaded.
