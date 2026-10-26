@@ -1,5 +1,13 @@
 # Atlas geography data
 
+## Organization map layers
+
+Membership snapshot checked 26 October 2026. `organizations.js` records the official source for each group: [UN](https://www.un.org/en/about-us/member-states) (193), [G20](https://www.dfat.gov.au/trade/organisations/g20) (19 countries), [SCO](https://eng.sectsco.org/20170109/192193.html) (10), [EU](https://european-union.europa.eu/principles-countries-history/eu-countries_en) (27), [NATO](https://www.nato.int/cps/en/natohq/nato_countries.htm) (32), [ASEAN](https://asean.org/member-states/) (11), [G7](https://www.international.gc.ca/world-monde/international_relations-relations_internationales/g7/index.aspx?lang=eng) (7 countries), and [SAARC](https://www.saarc-sec.org/) (8). These eight tracked groups are not an exhaustive account of international memberships.
+
+The EU and African Union are G20 members as regional bodies; their constituent countries do not automatically become direct country members. The EU also participates in the G7. Observers, dialogue partners, and summit guests are excluded from full-member maps. UN observer status for the Holy See is displayed on the bundled Vatican City profile; Palestine is also marked as an observer, per the [UN observer list](https://research.un.org/en/unmembers/observers). ASEAN includes [Timor-Leste's admission on 26 October 2025](https://asean.org/forging-a-new-era-timor-leste-admitted-into-asean/).
+
+Map layers combine the six populated country regions with direct organization membership. Oceania wraps Pacific country geometry and markers across the dateline when fitted; world reset and quizzes restore the original world geometry. These are offline snapshots, with source links and dates visible in the interface; they do not update automatically. Shareable map filters use `#region=Asia&org=sco`. Additional profile coordinates are approximate reference points from the original country dataset.
+
 Bundled snapshot prepared on 26 October 2026. Atlas makes no runtime geography API requests.
 
 ## Country facts
