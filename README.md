@@ -2,7 +2,7 @@
 
 A static collection of browser applications hosted on GitHub Pages.
 
-The root `index.html` is the collection landing page. Solis lives at **`Weather/`** (capital W). The remaining applications live in `bmi/`, `clock/`, `gpa/`, `piano/`, `pos/`, `radio/`, and `task/`.
+The root `index.html` is the collection landing page. Solis lives at **`Weather/`** (capital W). The remaining applications live in `BMI/`, `clock/`, `GPA/`, `Piano/`, `POS/`, `radio/`, and `Task/`.
 
 ## Update the collection
 
