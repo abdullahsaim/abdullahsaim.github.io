@@ -28,3 +28,15 @@ Bundled snapshot prepared on 26 October 2026. Atlas makes no runtime geography A
 - Discoveries, saved places, cumulative answers, milestones, and recent completed rounds are kept in localStorage under `atlas-passport-v1`.
 - Export creates a JSON copy of the browser-local passport. The Restore action validates that JSON file and asks before replacing the current browser-local passport.
 - The quiz engine is independent of the interface in `engine.js`; flags and geography data stay available without external image services after the page and its local assets have loaded.
+
+## Advanced learning and sharing
+
+The v1 passport format is extended with optional `review`, `days`, and `goal` fields. Older passports retain all existing totals, discoveries, favorites, and history; missing learning records start empty. New history entries also record response style, practice kind, and total answer time.
+
+Review records are separate for each country and quiz mode. Misses are eligible for spaced review after five minutes and are immediately available in missed-answer practice. A first correct recall schedules one day ahead, followed by 3, 7, 14, and 30 days on subsequent due reviews. Early repeats do not advance the interval. Correct answers clear the missed queue for that country/mode.
+
+Flashcards use self-assessment to update review schedules and learning activity without changing quiz accuracy or correct-answer totals. Activity history and daily goals begin with answers recorded by this update; legacy global totals are preserved.
+
+Typed answers ignore case, accents, spacing, and punctuation. Country common/official names and two-letter ISO codes are accepted; any listed capital is accepted for multi-capital countries. No fuzzy spelling matching is used.
+
+Country comparison uses the bundled facts. Distances use a mean Earth radius of 6,371 km in a haversine calculation between country reference coordinates, not capitals or travel routes. Country links use `#country=FR`; comparisons use `#compare=FR,JP`. Both validate IDs against the bundled list.
