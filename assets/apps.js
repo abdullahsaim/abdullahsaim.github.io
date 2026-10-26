@@ -1,5 +1,7 @@
 /* Add an entry here to grow the homepage collection. Paths are case-sensitive on GitHub Pages. */
 const apps = [
+  { name: 'Canvas', category: 'Creative', type: 'IMAGE TOOLKIT', path: 'Canvas/', icon: '▧', color: 'aqua', tagline: 'Your images. A fresh perspective.', description: 'Crop, resize, rotate, and fine-tune your images. Export a lighter file or a fresh look, all on your device.', tags: ['Crop & resize', 'PNG · JPEG · WebP'], preview: 'canvas' },
+  { name: 'Words', category: 'Everyday', type: 'TEXT TOOLKIT', path: 'Words/', icon: 'Aa', color: 'purple', tagline: 'Great words. Less busywork.', description: 'Live word counts, reading time, text cleanup, and find-and-replace. A little space to write and refine.', tags: ['Live statistics', 'Text cleanup'], preview: 'words' },
   { name: 'Forma', category: 'Everyday', type: 'UNIT CONVERTER', path: 'Convert/', icon: '⇄', color: 'green', tagline: 'Different units. Same understanding.', description: 'Convert length, weight, temperature, and more. Eight useful categories, instant answers, and a clearer perspective.', tags: ['8 categories', 'Instant conversions'], preview: 'convert' },
   { name: 'Solis', category: 'Everyday', type: 'WEATHER', path: 'Weather/', icon: '☀', color: 'blue', tagline: 'A brighter outlook.', description: 'Your daily forecast, air quality, and a world of cities. A little clarity for whatever the sky has planned.', tags: ['Live forecasts', 'City comparison'], preview: 'weather' },
   { name: 'Chronosphere', category: 'Everyday', type: 'WORLD CLOCK', path: 'clock/', icon: '◷', color: 'peach', tagline: 'Every moment, everywhere.', description: 'Keep the world in sync. Explore time zones and find a meeting time that works across continents.', tags: ['World time', 'Meeting planner'], preview: 'clock' },
@@ -11,6 +13,8 @@ const apps = [
   { name: 'Timetable Analyzer', category: 'Learning', type: 'STUDY PLANNER', path: 'Task/', icon: '▤', color: 'aqua', tagline: 'See your semester clearly.', description: 'Explore the ADEO S3 schedule, understand your workload, and find the free spaces in your week.', tags: ['Schedule insights', 'Free-time finder'], preview: 'schedule' }
 ];
 const previews = {
+  canvas: '<div class="preview-canvas"><span>YOUR NEXT PERSPECTIVE</span><div class="mini-landscape"><i></i><b></b><em></em><span></span></div><small>1200 × 800 &nbsp; ↗</small></div>',
+  words: '<div class="preview-words"><span>A LITTLE SPACE FOR YOUR THOUGHTS</span><strong>Make every<br>word count<span>.</span></strong><div><i></i><i></i><i></i></div><small>Aa &nbsp; ↔ &nbsp; ✳</small></div>',
   convert: '<div class="preview-clock"><span>KILOMETERS<strong>1</strong></span><i>⇄</i><span>METERS<strong>1,000</strong></span></div>',
   weather: '<div class="preview-weather"><span class="preview-sun">☀</span><span class="preview-temp">24°<small>Partly sunny</small></span><span class="forecast-bars"><i>MON<br>☀<br>24°</i><i>TUE<br>☁<br>22°</i><i>WED<br>☀<br>25°</i></span></div>',
   clock: '<div class="preview-clock"><span>PARIS<strong>10:24</strong></span><i>↔</i><span>TOKYO<strong>18:24</strong></span></div>',
@@ -43,3 +47,6 @@ document.querySelector('[data-filter="All"] span').textContent = apps.length;
 document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('back-top').addEventListener('click', event => { event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); });
 renderApps();
+
+const heroCount = document.getElementById("hero-app-count");
+if (heroCount) heroCount.textContent = apps.length;
