@@ -9,3 +9,7 @@ The root `index.html` is the collection landing page. Solis lives at **`Weather/
 Add or edit an entry in `assets/apps.js`. Each entry defines its name, category, description, destination, tags, and preview. The homepage generates app links, search results, filters, and the total count from this list. Add any new preview markup to `previews` in the same file. Update the no-JavaScript links in `index.html` when adding an application.
 
 GitHub Pages paths are case-sensitive. Each application directory must contain an `index.html`. No build step or dependencies are required. Serve the repository with any static HTTP server for local preview.
+
+## Forma unit converter
+
+`Convert/` contains Forma, a browser-local unit converter covering length, weight, temperature, volume, speed, area, time, and digital storage. Conversion factors live in `Convert/units.js`; the interface lives in `Convert/app.js` and `Convert/style.css`. No API or build step is needed.

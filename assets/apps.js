@@ -1,5 +1,6 @@
 /* Add an entry here to grow the homepage collection. Paths are case-sensitive on GitHub Pages. */
 const apps = [
+  { name: 'Forma', category: 'Everyday', type: 'UNIT CONVERTER', path: 'Convert/', icon: '⇄', color: 'green', tagline: 'Different units. Same understanding.', description: 'Convert length, weight, temperature, and more. Eight useful categories, instant answers, and a clearer perspective.', tags: ['8 categories', 'Instant conversions'], preview: 'convert' },
   { name: 'Solis', category: 'Everyday', type: 'WEATHER', path: 'Weather/', icon: '☀', color: 'blue', tagline: 'A brighter outlook.', description: 'Your daily forecast, air quality, and a world of cities. A little clarity for whatever the sky has planned.', tags: ['Live forecasts', 'City comparison'], preview: 'weather' },
   { name: 'Chronosphere', category: 'Everyday', type: 'WORLD CLOCK', path: 'clock/', icon: '◷', color: 'peach', tagline: 'Every moment, everywhere.', description: 'Keep the world in sync. Explore time zones and find a meeting time that works across continents.', tags: ['World time', 'Meeting planner'], preview: 'clock' },
   { name: 'Viora', category: 'Everyday', type: 'WELLNESS', path: 'BMI/', icon: '♡', color: 'green', tagline: 'A little more balance.', description: 'Get to know your numbers with a collection of wellness calculators and personal insights.', tags: ['Body calculators', 'Wellness tools'], preview: 'wellness' },
@@ -10,6 +11,7 @@ const apps = [
   { name: 'Timetable Analyzer', category: 'Learning', type: 'STUDY PLANNER', path: 'Task/', icon: '▤', color: 'aqua', tagline: 'See your semester clearly.', description: 'Explore the ADEO S3 schedule, understand your workload, and find the free spaces in your week.', tags: ['Schedule insights', 'Free-time finder'], preview: 'schedule' }
 ];
 const previews = {
+  convert: '<div class="preview-clock"><span>KILOMETERS<strong>1</strong></span><i>⇄</i><span>METERS<strong>1,000</strong></span></div>',
   weather: '<div class="preview-weather"><span class="preview-sun">☀</span><span class="preview-temp">24°<small>Partly sunny</small></span><span class="forecast-bars"><i>MON<br>☀<br>24°</i><i>TUE<br>☁<br>22°</i><i>WED<br>☀<br>25°</i></span></div>',
   clock: '<div class="preview-clock"><span>PARIS<strong>10:24</strong></span><i>↔</i><span>TOKYO<strong>18:24</strong></span></div>',
   wellness: '<div class="preview-wellness"><span>YOUR DAILY BALANCE</span><div class="wellness-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>A little progress, every day.</small></div>',
