@@ -1,5 +1,11 @@
 # Atlas geography data
 
+## Population and religion
+
+Country profiles include 2024 population estimates from [World Bank SP.POP.TOTL](https://data.worldbank.org/indicator/SP.POP.TOTL), with [Vatican City residents](https://www.vaticanstate.va/en/state-and-government/general-informations/population.html) supplied separately. All 195 profiles have a population value. Affiliation uses [Pew's rounded 2020 religious composition estimates](https://www.pewresearch.org/religion/feature/religious-composition-by-country-2010-2020/), covering 183 Atlas profiles. Twelve small countries are outside that dataset and explicitly display missing affiliation data.
+
+State religion uses [Pew's 2015 classification, published in 2017](https://www.pewresearch.org/religion/2017/10/03/many-countries-favor-specific-religions-officially-or-unofficially/), matching 194 profiles. It is clearly labeled as historical, with an explicit notice that it may differ from current law. Official, favored, neither, and hostile relationships remain distinct; Vatican City is unclassified in this source. A broad religious majority requires more than 50% affiliation; a plurality or an unaffiliated majority is not labeled a religious majority. Source links, different reference years, and missing-data messages are visible in each profile. See `source-data/README.md` for provenance, aliases, regeneration, coverage, and rounding rules.
+
 ## Organization map layers
 
 Membership snapshot checked 26 October 2026. `organizations.js` records the official source for each group: [UN](https://www.un.org/en/about-us/member-states) (193), [G20](https://www.dfat.gov.au/trade/organisations/g20) (19 countries), [SCO](https://eng.sectsco.org/20170109/192193.html) (10), [EU](https://european-union.europa.eu/principles-countries-history/eu-countries_en) (27), [NATO](https://www.nato.int/cps/en/natohq/nato_countries.htm) (32), [ASEAN](https://asean.org/member-states/) (11), [G7](https://www.international.gc.ca/world-monde/international_relations-relations_internationales/g7/index.aspx?lang=eng) (7 countries), and [SAARC](https://www.saarc-sec.org/) (8). These eight tracked groups are not an exhaustive account of international memberships.

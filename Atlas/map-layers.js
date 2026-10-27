@@ -85,6 +85,7 @@ window.AtlasLayers = (() => {
   }
   function profile() {
     const country = byId.get(state.selected); if (!country) return;
+    window.AtlasDemographics?.render(country.id);
     const coordinate = (value, positive, negative) => Math.abs(value).toLocaleString(undefined, {maximumFractionDigits: 2}) + '° ' + (value >= 0 ? positive : negative);
     const extras = [['COUNTRY CODE', country.id + ' · ISO 3166-1 alpha-2'], ['GEOGRAPHY', country.landlocked ? 'Landlocked' : 'Has a coastline'], ['REFERENCE COORDINATES', coordinate(country.lat, 'N', 'S') + ', ' + coordinate(country.lon, 'E', 'W')]];
     $('profile-extra-facts').replaceChildren(...extras.map(([label, value]) => { const row = element('div'), name = element('span', label, 'fact-label'), content = element('strong', value); row.append(name, content); return row; }));
