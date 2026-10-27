@@ -1,5 +1,6 @@
 /* Add an entry here to grow the homepage collection. Paths are case-sensitive on GitHub Pages. */
 const apps = [
+  { name: 'Palette', category: 'Creative', type: 'COLOR STUDIO', path: 'Palette/', icon: '◒', color: 'purple', tagline: 'A little color. A lot of possibility.', description: 'Create color harmonies, extract palettes from images, check text contrast, and preview your colors in a real design. Save, share, and export your favorites.', tags: ['Color palettes & image extraction', 'Contrast & CSS export'], preview: 'palette' },
   { name: 'Atlas', category: 'Learning', type: 'GEOGRAPHY PLAYGROUND', path: 'Atlas/', icon: '◎', color: 'aqua', tagline: 'Big world. Endless discoveries.', description: 'Explore 195 countries, continent maps, and organization memberships. Compare destinations and learn with quizzes, flashcards, and spaced review.', tags: ['Continent & organization maps', 'Quizzes & spaced review'], preview: 'atlas' },
   { name: 'Canvas', category: 'Creative', type: 'IMAGE TOOLKIT', path: 'Canvas/', icon: '▧', color: 'aqua', tagline: 'Your images. A fresh perspective.', description: 'Crop, resize, rotate, and fine-tune your images. Export a lighter file or a fresh look, all on your device.', tags: ['Crop & resize', 'PNG · JPEG · WebP'], preview: 'canvas' },
   { name: 'Words', category: 'Everyday', type: 'TEXT TOOLKIT', path: 'Words/', icon: 'Aa', color: 'purple', tagline: 'Great words. Less busywork.', description: 'Live word counts, reading time, text cleanup, and find-and-replace. A little space to write and refine.', tags: ['Live statistics', 'Text cleanup'], preview: 'words' },
@@ -14,6 +15,7 @@ const apps = [
   { name: 'Timetable Analyzer', category: 'Learning', type: 'STUDY PLANNER', path: 'Task/', icon: '▤', color: 'aqua', tagline: 'See your semester clearly.', description: 'Explore the ADEO S3 schedule, understand your workload, and find the free spaces in your week.', tags: ['Schedule insights', 'Free-time finder'], preview: 'schedule' }
 ];
 const previews = {
+  palette: '<div class="preview-palette"><span>A LITTLE COLOR. A LOT OF POSSIBILITY.</span><div><i></i><i></i><i></i><i></i><i></i></div><small>FIND A FEELING. MAKE IT YOURS. ↗</small></div>',
   atlas: '<div class="preview-atlas"><span>A WORLD OF LITTLE DISCOVERIES</span><div class="mini-atlas-globe"><i></i><i></i><b>✦</b></div><small>195 COUNTRIES &nbsp; / &nbsp; ENDLESS CURIOSITY</small></div>',
   canvas: '<div class="preview-canvas"><span>YOUR NEXT PERSPECTIVE</span><div class="mini-landscape"><i></i><b></b><em></em><span></span></div><small>1200 × 800 &nbsp; ↗</small></div>',
   words: '<div class="preview-words"><span>A LITTLE SPACE FOR YOUR THOUGHTS</span><strong>Make every<br>word count<span>.</span></strong><div><i></i><i></i><i></i></div><small>Aa &nbsp; ↔ &nbsp; ✳</small></div>',
