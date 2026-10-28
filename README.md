@@ -27,6 +27,8 @@ Color calculations and alpha-weighted image quantization live in `Palette/color.
 
 Shared styling lives in `assets/toolkit.css`. Neither tool needs a build step, API key, server processing, or user account.
 
+Canvas also includes a batch format converter at `Canvas/#convert`, alongside the existing editor at `Canvas/#editor`. Convert JPG/PNG/WebP and browser-decodable AVIF/GIF/BMP inputs to PNG, JPG, or WebP, optionally resize without upscaling, choose a JPG background, and download individual images or a ZIP. Format changes invalidate old outputs, and actual encoded MIME types are checked. Limits and metadata/animation behavior are documented in `Canvas/README.md`. The homepage describes the expanded Canvas toolkit; the collection remains at 14 apps.
+
 ## Atlas geography playground
 
 `Atlas/` bundles 195 country profiles, local SVG flags, and a Natural Earth world map. Explore with search, region filters, pan/zoom, and saved countries; play capital, flag, map, mixed, or deterministic daily quizzes. Optional timers, difficulty levels, hints, answer review, and a browser-local passport are included. See `Atlas/SOURCES.md` and bundled licenses for data attribution. No runtime geography API or build step is required.
