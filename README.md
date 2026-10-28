@@ -12,7 +12,7 @@ GitHub Pages paths are case-sensitive. Each application directory must contain a
 
 ## Palette color studio
 
-`Palette/` is a browser-local color studio with editable and lockable swatches, five harmony schemes, undo/redo, a live design preview, gradient CSS, local image color extraction, and a WCAG 2.2 contrast checker. Palettes can be saved on the device, shared by URL, and exported as CSS, importable JSON, SVG, or PNG. The homepage includes Palette under Creative and derives the 13-app count from its catalog.
+`Palette/` is a browser-local color studio with editable and lockable swatches, five harmony schemes, undo/redo, a live design preview, gradient CSS, local image color extraction, and a WCAG 2.2 contrast checker. Palettes can be saved on the device, shared by URL, and exported as CSS, importable JSON, SVG, or PNG. The homepage includes Palette under Creative and derives the app count from its catalog.
 
 Color calculations and alpha-weighted image quantization live in `Palette/color.js`. Contrast uses the sRGB relative-luminance formula with unrounded pass/fail comparisons; displayed ratios are rounded. Results assess color contrast, not complete accessibility. Image processing uses a sample up to 160 pixels per side; input is limited to 20 MB and 24 MP. Transparent pixels are excluded; animated images use one frame. Browser storage is optional, with explicit errors and portable JSON exports. No build, API key, account, or image upload is required. See the checker’s linked [W3C contrast guidance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html). Run `node Palette/test.cjs` for color-math and extraction checks.
 
